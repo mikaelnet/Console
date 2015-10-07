@@ -74,6 +74,8 @@ namespace Cognifide.PowerShell.Core.Host
             }
             session.SetVariable("options",options);
 
+            const string TabExpansionsReplacement = @". ""$AppPath\sitecore modules\PowerShell\Scripts\tabexpansion.ps1""";
+            session.ExecuteScriptPart(TabExpansionsReplacement);
             const string TabExpansionHelper =
                 @"function ScPsTabExpansionHelper( [string] $inputScript, [int]$cursorColumn ){ TabExpansion2 $inputScript $cursorColumn -Options $options |% { $_.CompletionMatches } |% { ""$($_.ResultType)|$($_.CompletionText)"" } }";
             session.ExecuteScriptPart(TabExpansionHelper);
@@ -248,14 +250,20 @@ namespace Cognifide.PowerShell.Core.Host
                 @"function ScPsReplacementIndex( [string] $inputScript, [int]$cursorColumn ){ TabExpansion2 $inputScript $cursorColumn |% { $_.ReplacementIndex } }";
             session.ExecuteScriptPart(TabExpansionHelper);
 
+            var commandLength = command.Length;
             var teCmd = new Command("ScPsReplacementIndex");
             teCmd.Parameters.Add("inputScript", command);
-            teCmd.Parameters.Add("cursorColumn", command.Length);
+            teCmd.Parameters.Add("cursorColumn", commandLength);
 
-            var teResult = session.ExecuteCommand(teCmd, false, true).Cast<int>().First();
+            var teResult = session.ExecuteCommand(teCmd, false, true);
+            var substringLength = commandLength;
+            if (teResult.Any())
+            {
+                substringLength = teResult.Cast<int>().First();
+            }
+            lastToken = command.Substring(substringLength);
 
-            lastToken = command.Substring(teResult);
-            return command.Substring(0, teResult);
+            return command.Substring(0, substringLength);
         }
 
         private static string TruncatedCommand2(string command, out string lastToken)

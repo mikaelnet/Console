@@ -162,14 +162,14 @@ extend(cognifide, "powershell");
 
                     if (line) {
                             
-                        if(!$.tabCompletions || line !== prefix || prefix.indexOf($.lastPrefix)==-1) {
+                        if(!$.tabCompletions || line !== prefix || prefix.indexOf($.lastPrefix)==-1 || !$.lastPrefix) {
                             $.lastPrefix = prefix;
                             _getTabCompletions(line);
                         }
                     } else {
                         $.tabCompletions = [""];
                     }
-                    var keywords = $.tabCompletions;
+                    var keywords = $.tabCompletions || [""];
                     var psCompleter = this;
                     callback(null, keywords.map(function(word) {
                         var hint = word.split("|");
