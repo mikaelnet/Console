@@ -99,7 +99,10 @@
     <Reference Include="Sitecore.Logging">
       <HintPath>$(LibrariesPath)\Sitecore.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibrariesPath)\Sitecore.NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Update">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(LibrariesPath)\Sitecore.Update.dll</HintPath>
@@ -180,6 +183,11 @@
     <Compile Include="Client\Controls\UserPicker.cs" />
     <Compile Include="Commandlets\BaseCommand.cs" />
     <Compile Include="Commandlets\BaseIndexCommand.cs" />
+    <Compile Include="Commandlets\Data\Clone\AcceptCloneNotificationCommand.cs" />
+    <Compile Include="Commandlets\Data\Clone\AddCloneNotificationCommand.cs" />
+    <Compile Include="Commandlets\Data\Clone\CloneNotificationCommand.cs" />
+    <Compile Include="Commandlets\Data\Clone\GetCloneNotificationCommand.cs" />
+    <Compile Include="Commandlets\Data\Clone\RejectNotificationCommand.cs" />
     <Compile Include="Commandlets\Data\NewUsingBlockCommand.cs" />
     <Compile Include="Commandlets\Data\ResetItemFieldCommand.cs" />
     <Compile Include="Commandlets\Data\Search\InitializeSearchIndexCommand.cs" />
